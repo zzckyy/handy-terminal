@@ -1,58 +1,80 @@
-const { app, BrowserWindow, Menu, globalShortcut } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const pty = require('node-pty')
 
-function createWindow() {
-    const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        frame: false,
-        resizable: true,
-        transparent: true,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        }
-        
-    })
-    win.loadFile('index.html')
+function windowView() {
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    frame: false,
+    resizable: true,
+    transparent: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  })
 
-    win.webContents.on('before-input-event', (event, input) => {
-        if(input.key == 'Escape' )
-        {
-            dynamicWindow(win)
-        }
+  win.loadFile('index.html')
 
-        if(input.control && input.key.toLowerCase() === "n")
-        {
-            createWindow()
-        }
-    })
-    //   win.setMenu(null)
-    // bikin context menu
-    const contextMenu = Menu.buildFromTemplate([
-        { label: 'Select All', role: 'selectAll'},
-        { label: 'Copy', role: 'copy' },
-        { label: 'Paste', role: 'paste' },
-        { label: 'cut', role: 'cut'}
-    ])
+  // spawn real shell
+  const shell = pty.spawn('bash', [], {
+    name: 'xterm-color',
+    cols: 80,
+    rows: 24,
+    cwd: process.env.HOME,
+    env: process.env
+  })
 
-    win.webContents.on('context-menu', (e) => {
-        contextMenu.popup()
-    })
-}   
+  let alive = true
 
-function dynamicWindow(win)
-{
-    const windows = BrowserWindow.getAllWindows()
+  // kirim output shell ke renderer (AMAN)
+  shell.onData(data => {
+    if (alive && !win.isDestroyed()) {
+      win.webContents.send('terminal:data', data)
+    }
+  })
 
-    if(windows.length > 1)
-    {
-        win.close()
+  // terima input dari renderer
+  ipcMain.on('terminal:write', (_, data) => {
+    if (alive) shell.write(data)
+  })
+
+  // shortcut
+  win.webContents.on('before-input-event', (_, input) => {
+    if (input.key === 'Escape') {
+      dynamicWindow(win)
     }
 
-    else{
-        app.quit()
-        
+    if (input.control && input.key.toLowerCase() === 'n') {
+      windowView()
     }
+  })
+
+  win.on('closed', () => {
+    alive = false
+    shell.kill()
+  })
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Select All', role: 'selectAll' },
+    { label: 'Copy', role: 'copy' },
+    { label: 'Paste', role: 'paste' },
+    { label: 'Cut', role: 'cut' }
+  ])
+
+  win.webContents.on('context-menu', () => {
+    contextMenu.popup()
+  })
 }
 
-app.whenReady().then(createWindow)
+function dynamicWindow(win) {
+  const windows = BrowserWindow.getAllWindows()
+
+  if (windows.length > 1) {
+    win.destroy()
+  } else {
+    app.quit()
+  }
+}
+
+app.whenReady().then(windowView)
