@@ -69,4 +69,12 @@ cmdInput.addEventListener('keydown', (e) => {
         cmdInput.value =
             historyIndex === history.length ? '' : history[historyIndex]
     }
+
+    if(e.ctrlKey &&e.key === 'Delete')
+    {
+        e.preventDefault
+        output. textContent = ''
+        ipcRenderer.send('terminal:write', '\n')
+        return
+    }
 })
