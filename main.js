@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, globalShortcut } = require('electron')
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -11,8 +11,21 @@ function createWindow() {
             nodeIntegration: true,
             contextIsolation: false
         }
+        
     })
     win.loadFile('index.html')
+
+    win.webContents.on('before-input-event', (event, input) => {
+        if(input.key == 'Escape' )
+        {
+            dynamicWindow(win)
+        }
+
+        if(input.control && input.key.toLowerCase() === "n")
+        {
+            createWindow()
+        }
+    })
     //   win.setMenu(null)
     // bikin context menu
     const contextMenu = Menu.buildFromTemplate([
@@ -25,8 +38,21 @@ function createWindow() {
     win.webContents.on('context-menu', (e) => {
         contextMenu.popup()
     })
+}   
+
+function dynamicWindow(win)
+{
+    const windows = BrowserWindow.getAllWindows()
+
+    if(windows.length > 1)
+    {
+        win.close()
+    }
+
+    else{
+        app.quit()
+        
+    }
 }
-
-
 
 app.whenReady().then(createWindow)

@@ -1,3 +1,5 @@
+const { app } = require('electron')
+
 const { exec } = require('child_process')
 const output = document.getElementById('output')
 const cmdInput = document.getElementById('cmd')
@@ -45,4 +47,6 @@ cmdInput.addEventListener('keydown', (e) => {
     cmdInput.value =
       historyIndex === history.length ? '' : history[historyIndex]
   }
+
+  
 })
