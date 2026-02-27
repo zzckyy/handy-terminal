@@ -25,6 +25,10 @@ ipcRenderer.on('terminal:data', (_, data) => {
     output.scrollTop = output.scrollHeight
 })
 
+document.addEventListener('click', () => {
+  cmdInput.focus()
+})
+
 cmdInput.addEventListener('keydown', (e) => {
 
     if (e.ctrlKey && e.key === 'c') {
