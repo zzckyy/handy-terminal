@@ -12,8 +12,13 @@ div{
     padding:10px;
     height:80vh;
     overflow:auto;
-    -webkit-app-region: drag; 
-    app-region: drag;
+    /* -webkit-app-region: drag; 
+    app-region: drag; */
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+    scrollbar-width: none;
 }
 .terminal-input{
     width:90%;
