@@ -13,5 +13,8 @@
   "type": "commonjs",
   "devDependencies": {
     "electron": "^40.6.1"
+  },
+  "dependencies": {
+    "ansi-to-html": "^0.7.2"
   }
 }
