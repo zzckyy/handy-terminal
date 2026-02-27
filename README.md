@@ -27,6 +27,11 @@ No unnecessary features or complex workflows. Handy Terminal provides exactly wh
 
 ---
 
+### Shortcut
+- Ctrl + n = New Window
+- Ctrl + Escape = Close
+- Ctrl + Delete = Clear
+
 ## Design Philosophy
 
 A terminal should be fast, clear, and invisible when you use it.
