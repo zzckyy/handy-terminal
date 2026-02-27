@@ -1,0 +1,26 @@
+div{
+    border-radius: 24px;
+    -electron-corner-smoothing: system-ui;
+    background: white;
+    padding: 10px;
+    
+}
+
+.terminal-output{
+    background: white;
+    color:rgb(15, 15, 15);
+    padding:10px;
+    height:80vh;
+    overflow:auto;
+    -webkit-app-region: drag; 
+    app-region: drag;
+}
+.terminal-input{
+    width:90%;
+    padding:10px;
+    border: 0px transparent;
+}
+
+.terminal-input:focus{
+    border: 0px transparent;
+}
