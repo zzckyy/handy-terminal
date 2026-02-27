@@ -52,8 +52,7 @@ Features are added only when they improve usability while preserving simplicity.
 
 ## Get Started
 
-Clone the repository and run Handy Terminal locally.  
-Documentation and setup instructions are available in the repository.
+Clone the repository and run Handy Terminal locally.
 
 ---
 
