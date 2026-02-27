@@ -27,6 +27,15 @@ ipcRenderer.on('terminal:data', (_, data) => {
 
 cmdInput.addEventListener('keydown', (e) => {
 
+    if (e.ctrlKey && e.key === 'c') {
+    e.preventDefault()
+    ipcRenderer.send('terminal:write', '\x03')
+
+    output.textContent += '\n[Process interrupted]\n'
+    output.scrollTop = output.scrollHeight
+    return
+  }
+
     // ENTER → kirim ke shell + simpan history
     if (e.key === 'Enter') {
         const command = cmdInput.value
