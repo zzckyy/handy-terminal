@@ -1,4 +1,4 @@
-# Handy Terminal
+# Handy Terminal - Electron Lightweight Terminal
 
 ![Handy Terminal Preview](githubPreview/ss1.png)
 
@@ -28,9 +28,11 @@ No unnecessary features or complex workflows. Handy Terminal provides exactly wh
 ---
 
 ### Shortcut
-- Ctrl + n = New Window
+- Ctrl + N = New Window
 - Ctrl + Escape = Close
 - Ctrl + Delete = Clear
+- Ctrl + N = Close App
+- Alt + Mouse-drag = Move Window
 
 ## Design Philosophy
 
@@ -42,7 +44,7 @@ Handy Terminal removes distractions and keeps the experience straightforward, le
 
 ## Built For
 
-- Developers who prefer clean and minimal tools
+- Users who prefer clean and minimal tools
 - Users who want a lightweight, portable terminal
 - Anyone who values clarity over complexity
 
@@ -57,7 +59,14 @@ Features are added only when they improve usability while preserving simplicity.
 
 ## Get Started
 
-Clone the repository and run Handy Terminal locally.
+Clone the repository.
+
+---
+
+## Packages Use
+- Node.js
+- Electron
+- node-pty
 
 ---
 

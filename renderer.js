@@ -25,6 +25,15 @@ ipcRenderer.on('terminal:data', (_, data) => {
     output.scrollTop = output.scrollHeight
 })
 
+ipcRenderer.on('terminal:open-script-trigger', () =>
+{
+    ipcRenderer.send('terminal:open-script')
+
+    output.textContent += '\n[Running Bash Script]\n'
+    output.scrollTop = output.scrollHeight
+    return
+})
+
 document.addEventListener('click', () => {
   cmdInput.focus()
 })
