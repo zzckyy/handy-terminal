@@ -67,6 +67,7 @@ Clone the repository.
 - Node.js
 - Electron
 - node-pty
+- electron-builder
 
 ---
 
