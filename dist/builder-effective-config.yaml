@@ -1,0 +1,11 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.momaza.handy
+productName: handy
+linux:
+  target:
+    - AppImage
+  category: Utility
+files: []
+electronVersion: 40.6.1
